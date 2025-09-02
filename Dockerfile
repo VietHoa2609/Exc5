@@ -1,13 +1,16 @@
 # Tomcat 10.0.x + JDK 17
 FROM tomcat:10.0.27-jdk17-temurin
 
-# Xoá webapps mẫu
+# Xóa apps mẫu
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Render cấp biến môi trường PORT -> Tomcat listen trên PORT đó
-RUN sed -ri 's/port="8080"/port="${env.PORT}"/' /usr/local/tomcat/conf/server.xml
-
-# Đặt WAR làm ROOT để URL gốc = "/"
+# Copy WAR của bạn (đặt ROOT để URL gốc = "/")
 COPY WebMVC.war /usr/local/tomcat/webapps/ROOT.war
 
-CMD ["catalina.sh", "run"]
+# Khi container start:
+# - đổi Connector 8080 -> $PORT và bind 0.0.0.0
+# - tắt shutdown port 8005 (đặt -1) để khỏi log warning
+CMD sh -c '\
+  sed -ri "s#<Connector port=\\"8080\\"#<Connector address=\\"0.0.0.0\\" port=\\"${PORT}\\"#" /usr/local/tomcat/conf/server.xml && \
+  sed -ri "s#Server port=\\"8005\\"#Server port=\\"-1\\"#" /usr/local/tomcat/conf/server.xml && \
+  catalina.sh run'
