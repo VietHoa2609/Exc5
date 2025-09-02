@@ -1,5 +1,5 @@
 # Sử dụng Tomcat chính thức
-FROM tomcat:10-jdk17/21
+FROM tomcat:10.0.27-jdk17-temurin
 
 # Xóa app mặc định
 RUN rm -rf /usr/local/tomcat/webapps/*
