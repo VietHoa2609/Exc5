@@ -5,7 +5,7 @@ FROM tomcat:9.0-jdk11
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy file WAR (nhớ đổi đúng tên file WAR đã build ra)
-COPY exc5.war /usr/local/tomcat/webapps/ROOT.war
+COPY WebMVC.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expose cổng
 EXPOSE 8080
