@@ -1,5 +1,5 @@
 # Sử dụng Tomcat chính thức
-FROM tomcat:9.0-jdk11
+FROM tomcat:10-jdk17/21
 
 # Xóa app mặc định
 RUN rm -rf /usr/local/tomcat/webapps/*
